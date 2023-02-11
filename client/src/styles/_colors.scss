@@ -1,0 +1,33 @@
+$-palette: (
+  primary: (
+    main: #00ff9d,
+    light: lighten(#00ff9d, 30%),
+    dark: darken(#00ff9d, 30%),
+  ),
+  secondary: (
+    main: #731dd8,
+    light: lighten(#731dd8, 30%),
+    dark: darken(#731dd8, 30%),
+  ),
+  attention: (
+    main: #ff57bb,
+    light: lighten(#ff57bb, 30%),
+    dark: darken(#ff57bb, 30%),
+  ),
+  success: (
+    main: #00c8ff,
+    light: lighten(#00c8ff, 30%),
+  ),
+  text: (
+    primary: #000000,
+    secondary: #626262,
+  ),
+);
+
+:root {
+  @each $color, $values in $-palette {
+    @each $accent, $value in $values {
+      --#{$color+"-"+$accent}: #{$value};
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@use 'sass:map';
+
+$base-spacing: 1rem;
+$border-radius: 5px;
+
+$-spacings: (
+  's': 0.5rem,
+  'm': 1rem,
+  'l': 1.5rem,
+  'xl': 2rem,
+  'xxl': 3rem,
+);
+
+@function spacing($value) {
+  @return map-get($-spacings, $value);
+}
