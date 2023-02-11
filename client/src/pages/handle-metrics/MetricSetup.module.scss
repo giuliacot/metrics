@@ -1,0 +1,6 @@
+.mainContent {
+  background-color: var(--primary-light);
+  border-radius: $border-radius;
+  margin-bottom: spacing('xxl');
+  max-width: breakpoint('xxl');
+}
