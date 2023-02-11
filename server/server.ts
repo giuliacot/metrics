@@ -1,6 +1,7 @@
-import fastify, { FastifyError, FastifyRequest } from 'fastify'
+import fastify, { FastifyRequest } from 'fastify'
 import BackendService, { Metric } from './src/metrics'
-import { NotFound, InternalServerError } from 'http-errors'
+import { NotFound } from 'http-errors'
+import cors from '@fastify/cors'
 
 const server = fastify({
   logger: {
@@ -9,6 +10,9 @@ const server = fastify({
   },
 })
 
+server.register(cors, {
+  origin: true,
+})
 const service = new BackendService()
 
 server.get('/metrics', async (request, reply) => {
