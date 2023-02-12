@@ -1,0 +1,9 @@
+@use 'spacing' as spacing;
+
+$max-page-width: 1600px;
+
+@mixin page-setup() {
+  max-width: $max-page-width;
+  margin: 0 auto;
+  height: 100vh;
+}

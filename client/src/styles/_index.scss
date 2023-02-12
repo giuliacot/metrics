@@ -3,3 +3,8 @@
 @forward 'breakpoint';
 @forward 'colors';
 @forward 'typography';
+@forward 'grid';
+
+body {
+  background-color: var(--attention-light);
+}
