@@ -1,11 +1,15 @@
-import { ErrorResponse } from '@remix-run/router'
 import axios, { AxiosError } from 'axios'
+import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../components/Card/Card'
 import { Loading } from '../../components/Loading'
+import { Modal } from '../../components/Modal/Modal'
+import { Table } from '../../components/Table/Table'
+
 import style from './MetricSetup.module.scss'
 
-type Metric = {
+// TODO: generates type from the api => see how
+export type Metric = {
   id: string
   code: string
   amounts: number[] | null
@@ -21,8 +25,6 @@ export const MetricsSetup = () => {
   if (error) {
     console.log(error)
     throw Error(error.message)
-    // TODO error component
-    // TODO error page component
   }
 
   return (
@@ -31,11 +33,23 @@ export const MetricsSetup = () => {
         Marketing campaing Sales metrics Setup page
       </h1>
       {isLoading && <Loading />}
+      <Modal></Modal>
+      {data && <Table data={data} />}
       <main className={style.grid}>
         {data &&
           data.map(({ id, code, amounts, date }) => (
-            <div className={style.cardWrapper}>
-              <Card key={id} code={code} amounts={amounts} date={date} />
+            <div key={id} className={style.cardWrapper}>
+              <Card>
+                <h3>{code}</h3>
+                <p>
+                  Total sales order:{' '}
+                  {amounts?.reduce((acc, a) => a + acc, 0) ?? 0}
+                </p>
+                <p>
+                  Date:{' '}
+                  {new Intl.DateTimeFormat('it-IT').format(new Date(date))}
+                </p>
+              </Card>
             </div>
           ))}
       </main>

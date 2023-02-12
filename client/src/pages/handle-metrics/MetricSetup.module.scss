@@ -7,10 +7,15 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, minmax(0, 20 * $base-spacing));
   column-gap: spacing('m');
   row-gap: spacing('m') * 2;
-  justify-items: center;
+  justify-content: center;
+  margin: spacing('xl') 0;
+
+  @media only screen and (max-width: breakpoint('m')) {
+    grid-template-columns: repeat(1, minmax(0, 20 * $base-spacing));
+  }
 }
 
 .mainTitle {
@@ -20,6 +25,5 @@
 }
 
 .cardWrapper {
-  max-width: calc(20 * 1rem);
   width: 100%;
 }
