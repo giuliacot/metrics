@@ -18,9 +18,17 @@ $-palette: (
     main: #00c8ff,
     light: lighten(#00c8ff, 30%),
   ),
+  base: (
+    main: #c2c2c2,
+    light: lighten(#c2c2c2, 30%),
+    dark: darken(#c2c2c2, 20%),
+  ),
   text: (
-    primary: #000000,
+    primary: #202020,
     secondary: #626262,
+  ),
+  overlay: (
+    main: rgba(0, 0, 0, 0.5),
   ),
 );
 
