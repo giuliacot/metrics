@@ -4,3 +4,22 @@
   margin-bottom: spacing('xxl');
   max-width: breakpoint('xxl');
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: spacing('m');
+  row-gap: spacing('m') * 2;
+  justify-items: center;
+}
+
+.mainTitle {
+  padding-top: spacing('l');
+  text-align: center;
+  margin-bottom: spacing('xxl');
+}
+
+.cardWrapper {
+  max-width: calc(20 * 1rem);
+  width: 100%;
+}

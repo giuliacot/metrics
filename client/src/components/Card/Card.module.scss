@@ -1,0 +1,7 @@
+.box {
+  padding: $base-spacing;
+  border: 2px solid var(--primary-dark);
+  background-color: var(--primary-light);
+  border-radius: $border-radius;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.7);
+}
