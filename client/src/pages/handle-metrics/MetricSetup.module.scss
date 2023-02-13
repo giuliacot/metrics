@@ -46,6 +46,11 @@
   margin-bottom: spacing('m');
 }
 
+.cardButton {
+  @include Button('small');
+  margin-bottom: spacing('m');
+}
+
 .error {
   @include Typography(false, 'small');
   color: var(--attention-dark);

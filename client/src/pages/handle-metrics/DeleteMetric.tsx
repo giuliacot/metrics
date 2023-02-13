@@ -30,7 +30,7 @@ export const DeleteMetric = ({ id }: { id: string }) => {
 
   return (
     <>
-      <button className={style.addMetricBtn} onClick={handleDelete}>
+      <button className={style.cardButton} onClick={handleDelete}>
         Delete
       </button>
     </>

@@ -59,8 +59,7 @@ export const MetricsSetup = () => {
                   Date:
                   {new Intl.DateTimeFormat('it-IT').format(new Date(date))}
                 </p>
-
-                <EditMetric metric={{ id, code, amounts, date }} />
+                <EditMetric metric={{ id, code, amounts, date }} />{' '}
                 <DeleteMetric id={id} />
               </Card>
             </div>

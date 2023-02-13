@@ -88,7 +88,7 @@ export const EditMetric = ({ metric }: { metric: Metric }) => {
     <>
       <Modal open={openModal} onOpenChange={setOpenModal}>
         <Modal.Trigger asChild>
-          <button className={style.addMetricBtn}>Edit</button>
+          <button className={style.cardButton}>Edit</button>
         </Modal.Trigger>
         <Modal.Portal>
           <Modal.Content>
