@@ -3,18 +3,18 @@
   border-radius: $border-radius;
   margin-bottom: spacing('xxl');
   max-width: breakpoint('xxl');
+  margin: spacing('xl') spacing('m');
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 20 * $base-spacing));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: spacing('m');
   row-gap: spacing('m') * 2;
   justify-content: center;
-  margin: spacing('xl') 0;
 
   @media only screen and (max-width: breakpoint('m')) {
-    grid-template-columns: repeat(1, minmax(0, 20 * $base-spacing));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
 
@@ -26,4 +26,27 @@
 
 .cardWrapper {
   width: 100%;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  @include Typography(false, 'p');
+}
+.input {
+  margin: spacing('s') 0;
+  padding: spacing('s');
+}
+
+.addMetricBtn {
+  @include Button('normal');
+  margin-bottom: spacing('m');
+}
+
+.error {
+  @include Typography(false, 'small');
+  color: var(--attention-dark);
 }
