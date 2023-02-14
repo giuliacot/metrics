@@ -1,21 +1,32 @@
 @use 'sass:map';
 @use 'typography' as *;
 
-$border-radius: 5px;
-$button-sizes: (
+$border-radius: 2px;
+$sizes: (
   'normal': 0.8rem,
-  'small': 0.5rem,
+  'small': 0.4rem,
 );
 
-@mixin Button($button-size) {
+@mixin Button($button-size, $color: 'secondary') {
   @include Typography(false, 'p');
   border: 0;
   border-radius: $border-radius;
-  padding: map.get($button-sizes, $button-size);
-  background-color: var(--success-main);
+  padding: map.get($sizes, $button-size);
+  background-color: var(--#{$color}-main);
   transition: 0.2s ease-out;
+  color: var(--text-light);
 
   &:hover {
-    background-color: var(--success-light);
+    background-color: var(--#{$color}-light);
   }
+
+  &:disabled {
+    background-color: var(--base-light);
+    color: var(--base-main);
+  }
+}
+
+@mixin Input($input-size) {
+  margin: map.get($sizes, $input-size) 0;
+  padding: map.get($sizes, $input-size);
 }
