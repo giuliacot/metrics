@@ -2,13 +2,22 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { createRoutesFromChildren, Route, RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
 import { MetricsSetup } from './pages/handle-metrics/MetricsSetup'
+import style from './App.module.scss'
+import * as Toast from '@radix-ui/react-toast'
 
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter(
   createRoutesFromChildren(
     <Route errorElement={<div>Error page</div>}>
-      <Route path="/" element={<MetricsSetup />} />
+      <Route
+        path="/"
+        element={
+          <div className={style.pageBaseLayour}>
+            <MetricsSetup />
+          </div>
+        }
+      />
     </Route>
   )
 )
@@ -16,7 +25,10 @@ const router = createBrowserRouter(
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <Toast.Provider>
+        <RouterProvider router={router} />
+        <Toast.Viewport className={style.toastViewport} />
+      </Toast.Provider>
     </QueryClientProvider>
   )
 }

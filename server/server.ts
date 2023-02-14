@@ -1,6 +1,7 @@
-import fastify, { FastifyError, FastifyRequest } from 'fastify'
+import fastify, { FastifyRequest } from 'fastify'
 import BackendService, { Metric } from './src/metrics'
-import { NotFound, InternalServerError } from 'http-errors'
+import { NotFound, BadRequest } from 'http-errors'
+import cors from '@fastify/cors'
 
 const server = fastify({
   logger: {
@@ -9,6 +10,9 @@ const server = fastify({
   },
 })
 
+server.register(cors, {
+  origin: true,
+})
 const service = new BackendService()
 
 server.get('/metrics', async (request, reply) => {
@@ -43,7 +47,7 @@ server.post(
     }>,
     reply
   ) => {
-    const result = service.addMetric(request.body)
+    const result = await service.addMetric(request.body)
     if (result) {
       return reply.code(200).send(result)
     }
@@ -58,9 +62,12 @@ server.put(
     }>,
     reply
   ) => {
-    const result = service.updateMetric(request.body)
+    console.log(request.body, '\n\n')
+    const result = await service.updateMetric(request.body)
     if (result) {
       return reply.code(200).send(result)
+    } else {
+      throw new NotFound()
     }
   }
 )
@@ -73,9 +80,11 @@ server.delete(
     }>,
     reply
   ) => {
-    const result = service.deleteMetric(request.params.id)
+    const result = await service.deleteMetric(request.params.id)
     if (result) {
       return reply.code(200).send(result)
+    } else {
+      throw new BadRequest()
     }
   }
 )

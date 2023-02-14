@@ -1,0 +1,66 @@
+.mainContent {
+  background-color: var(--primary-light);
+  border-radius: $border-radius;
+  margin-bottom: spacing('xxl');
+  max-width: breakpoint('xxl');
+  margin: spacing('xl') spacing('m');
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: spacing('m');
+  row-gap: spacing('m') * 2;
+  justify-content: center;
+
+  @media only screen and (max-width: breakpoint('m')) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+.mainTitle {
+  padding-top: spacing('l');
+  text-align: center;
+  margin-bottom: spacing('xxl');
+  color: var(--secondary-dark);
+}
+
+.cardWrapper {
+  width: 100%;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  @include Typography(false, 'p');
+}
+
+.input {
+  @include Input('normal');
+}
+
+.addMetricBtn {
+  @include Button('normal');
+  margin-bottom: spacing('m');
+}
+
+.error {
+  @include Typography(false, 'small');
+  color: var(--attention-dark);
+}
+
+.toastRoot {
+  background-color: var(--success-light);
+  border: 2px solid var(--success-dark);
+  border-radius: $border-radius;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  display: grid;
+  grid-template-areas: 'title action' 'description action';
+  grid-template-columns: auto max-content;
+  column-gap: 15px;
+  align-items: center;
+}

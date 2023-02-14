@@ -1,0 +1,19 @@
+.table {
+  width: 100%;
+  border: 1px solid var(--primary-dark);
+  background-color: var(--neutral-light);
+  border-collapse: collapse;
+  border-radius: $border-radius;
+  overflow: hidden;
+}
+
+.titleHeader {
+  @include Typography(false, 'p');
+  padding: spacing('s');
+  border: 1px solid var(--neutral-dark);
+}
+
+.tData {
+  padding: spacing('s');
+  border: 1px solid var(--neutral-dark);
+}

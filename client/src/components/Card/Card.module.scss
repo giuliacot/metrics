@@ -1,0 +1,32 @@
+.box {
+  padding: spacing('s');
+  border: 2px solid var(--primary-dark);
+  background-color: var(--primary-light);
+  border-radius: $border-radius;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.7);
+}
+
+.button {
+  @include Button('small');
+
+  & + & {
+    margin-left: spacing('s');
+  }
+}
+
+.label {
+  @include Typography(true, 'small');
+  color: var(--text-secondary);
+  margin-right: spacing('s');
+  display: inline-block;
+}
+
+.value {
+  @include Typography(true, 'small');
+  color: var(--text-primary);
+}
+
+.bottom {
+  padding-top: spacing('s');
+  border-top: 1px solid var(--neutral-dark);
+}

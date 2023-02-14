@@ -5,22 +5,32 @@ $-palette: (
     dark: darken(#00ff9d, 30%),
   ),
   secondary: (
-    main: #731dd8,
-    light: lighten(#731dd8, 30%),
-    dark: darken(#731dd8, 30%),
+    main: #382781,
+    light: #777188,
+    dark: #191238,
   ),
   attention: (
     main: #ff57bb,
-    light: lighten(#ff57bb, 30%),
+    light: lighten(#ff57bb, 40%),
     dark: darken(#ff57bb, 30%),
   ),
   success: (
     main: #00c8ff,
     light: lighten(#00c8ff, 30%),
+    dark: darken(#00c8ff, 30%),
+  ),
+  neutral: (
+    main: #b2b1b5,
+    light: lighten(#b2b1b5, 40%),
+    dark: darken(#b2b1b5, 20%),
   ),
   text: (
-    primary: #000000,
+    primary: #202020,
     secondary: #626262,
+    light: #f4f4f4,
+  ),
+  overlay: (
+    main: rgba(0, 0, 0, 0.5),
   ),
 );
 
