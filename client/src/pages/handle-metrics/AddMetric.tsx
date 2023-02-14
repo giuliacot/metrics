@@ -111,7 +111,7 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
               />
               <p className={style.error}>{errors.amounts?.message}</p>
             </fieldset>
-            <button type="submit" className={style.addMetricBtn}>
+            <button type="submit" className={style.saveBtn}>
               Add metric
             </button>
           </form>

@@ -146,7 +146,7 @@ export const EditMetric = ({
                 />
                 <p className={style.error}>{errors.amounts?.message}</p>
               </fieldset>
-              <button type="submit" className={style.addMetricBtn}>
+              <button type="submit" className={style.saveBtn}>
                 Save
               </button>
             </form>
