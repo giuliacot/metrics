@@ -34,45 +34,48 @@ export const MetricsSetup = () => {
       <h1 className={style.mainTitle}>Marketing campaign sales metrics</h1>
       {isLoading && <Loading />}
 
-      {/* {data && <Table data={data} />} */}
-      <AddMetric>
-        <button className={style.addMetricBtn}>Add new metric</button>
-      </AddMetric>
-      <main className={style.grid}>
-        {data &&
-          data.map(({ id, code, amounts, date }, index) => (
-            <div key={index} className={style.cardWrapper}>
-              <Card>
-                <h4>{code}</h4>
-                <div>
-                  <Card.Label>Total sales order</Card.Label>
-                  <Card.Value>
-                    {amounts?.reduce((acc, a) => a + acc, 0) ?? 0}
-                  </Card.Value>
-                </div>
-
-                <div>
-                  <Card.Label>Orders date</Card.Label>
-                  <Card.Value>
-                    {new Intl.DateTimeFormat('it-IT').format(new Date(date))}
-                  </Card.Value>
-                </div>
-                <Card.Bottom>
-                  <EditMetric metric={{ id, code, amounts, date }}>
-                    <Card.Action>Edit</Card.Action>
-                  </EditMetric>
-                  <DeleteMetric
-                    id={id}
-                    renderItem={(onClickHandler) => (
-                      <Card.Action onClick={onClickHandler}>Delete</Card.Action>
-                    )}
-                  />
-                </Card.Bottom>
-              </Card>
-            </div>
-          ))}
-        {data?.length === 0 && <p>No metrics founded</p>}
-      </main>
+      {data && (
+        <>
+          <AddMetric>
+            <button className={style.addMetricBtn}>Add new metric</button>
+          </AddMetric>
+          <main className={style.grid}>
+            {data?.length === 0 && <p>No metrics founded</p>}
+            {data.map(({ id, code, amounts, date }, index) => (
+              <div key={index} className={style.cardWrapper}>
+                <Card>
+                  <h4>{code}</h4>
+                  <div>
+                    <Card.Label>Total sales order</Card.Label>
+                    <Card.Value>
+                      {amounts?.reduce((acc, a) => a + acc, 0) ?? 0}
+                    </Card.Value>
+                  </div>
+                  <div>
+                    <Card.Label>Orders date</Card.Label>
+                    <Card.Value>
+                      {new Intl.DateTimeFormat('it-IT').format(new Date(date))}
+                    </Card.Value>
+                  </div>
+                  <Card.Bottom>
+                    <EditMetric metric={{ id, code, amounts, date }}>
+                      <Card.Action>Edit</Card.Action>
+                    </EditMetric>
+                    <DeleteMetric
+                      id={id}
+                      renderItem={(onClickHandler) => (
+                        <Card.Action onClick={onClickHandler}>
+                          Delete
+                        </Card.Action>
+                      )}
+                    />
+                  </Card.Bottom>
+                </Card>
+              </div>
+            ))}
+          </main>
+        </>
+      )}
     </>
   )
 }
