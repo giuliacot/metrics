@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import { MetricsSetup } from './pages/handle-metrics/MetricsSetup'
 import style from './App.module.scss'
 import * as Toast from '@radix-ui/react-toast'
+import { MetricsView } from './pages/view-metrics/ViewMetrics'
 
 const queryClient = new QueryClient()
 
@@ -15,6 +16,14 @@ const router = createBrowserRouter(
         element={
           <div className={style.pageBaseLayour}>
             <MetricsSetup />
+          </div>
+        }
+      />
+      <Route
+        path="/view"
+        element={
+          <div className={style.pageBaseLayour}>
+            <MetricsView />
           </div>
         }
       />
