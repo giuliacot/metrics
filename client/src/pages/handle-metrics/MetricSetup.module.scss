@@ -22,6 +22,7 @@
   padding-top: spacing('l');
   text-align: center;
   margin-bottom: spacing('xxl');
+  color: var(--secondary-dark);
 }
 
 .cardWrapper {
@@ -49,4 +50,17 @@
 .error {
   @include Typography(false, 'small');
   color: var(--attention-dark);
+}
+
+.toastRoot {
+  background-color: var(--success-light);
+  border: 2px solid var(--success-dark);
+  border-radius: $border-radius;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  display: grid;
+  grid-template-areas: 'title action' 'description action';
+  grid-template-columns: auto max-content;
+  column-gap: 15px;
+  align-items: center;
 }

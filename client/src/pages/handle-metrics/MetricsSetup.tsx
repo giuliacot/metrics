@@ -31,9 +31,7 @@ export const MetricsSetup = () => {
 
   return (
     <>
-      <h1 className={style.mainTitle}>
-        Marketing campaign Sales metrics Setup page
-      </h1>
+      <h1 className={style.mainTitle}>Marketing campaign sales metrics</h1>
       {isLoading && <Loading />}
 
       {/* {data && <Table data={data} />} */}
@@ -46,25 +44,30 @@ export const MetricsSetup = () => {
             <div key={index} className={style.cardWrapper}>
               <Card>
                 <h4>{code}</h4>
-                <p>
-                  Total sales order:
-                  {amounts?.reduce((acc, a) => a + acc, 0) ?? 0}
-                </p>
-                <p>
-                  Date:
-                  {new Intl.DateTimeFormat('it-IT').format(new Date(date))}
-                </p>
-                <EditMetric metric={{ id, code, amounts, date }}>
-                  <Card.Action>Edit</Card.Action>
-                </EditMetric>{' '}
-                <DeleteMetric
-                  id={id}
-                  renderItem={(onClickEvent) => (
-                    <Card.Action onClick={onClickEvent}>
-                      Delete {JSON.stringify(id)}
-                    </Card.Action>
-                  )}
-                />
+                <div>
+                  <Card.Label>Total sales order</Card.Label>
+                  <Card.Value>
+                    {amounts?.reduce((acc, a) => a + acc, 0) ?? 0}
+                  </Card.Value>
+                </div>
+
+                <div>
+                  <Card.Label>Orders date</Card.Label>
+                  <Card.Value>
+                    {new Intl.DateTimeFormat('it-IT').format(new Date(date))}
+                  </Card.Value>
+                </div>
+                <Card.Bottom>
+                  <EditMetric metric={{ id, code, amounts, date }}>
+                    <Card.Action>Edit</Card.Action>
+                  </EditMetric>
+                  <DeleteMetric
+                    id={id}
+                    renderItem={(onClickHandler) => (
+                      <Card.Action onClick={onClickHandler}>Delete</Card.Action>
+                    )}
+                  />
+                </Card.Bottom>
               </Card>
             </div>
           ))}
