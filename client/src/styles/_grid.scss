@@ -6,4 +6,5 @@ $max-page-width: 1600px;
   max-width: $max-page-width;
   margin: 0 auto;
   height: 100vh;
+  padding: 0 spacing.spacing('m');
 }
