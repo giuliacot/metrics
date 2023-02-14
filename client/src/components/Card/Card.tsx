@@ -17,5 +17,29 @@ export const Action = ({
   )
 }
 
+export const Label = ({ children, ...props }: { children: ReactNode }) => {
+  return (
+    <span className={style.label} {...props}>
+      {children}
+    </span>
+  )
+}
+
+export const Value = ({ children, ...props }: { children: ReactNode }) => {
+  return (
+    <span className={style.value} {...props}>
+      {children}
+    </span>
+  )
+}
+
+export const Bottom = ({ children, ...props }: { children: ReactNode }) => {
+  return <div className={style.bottom}>{children}</div>
+}
+
 Card.Action = Action
+Card.Label = Label
+Card.Value = Value
+Card.Bottom = Bottom
+
 export { Card }
