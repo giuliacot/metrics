@@ -13,11 +13,14 @@ import { useMutation, useQueryClient } from 'react-query'
 import { Metric } from './MetricsSetup'
 import style from './MetricSetup.module.scss'
 import { reducer, initReducer } from './reducer'
-import { wait } from '../../utils/waits'
+import * as Toast from '@radix-ui/react-toast'
+import { formatDatePicker } from '../../utils/formatDatePicker'
+import { TOAST_DURATION_TIME } from '../../utils/consts'
 
 export const AddMetric = ({ children }: { children: ReactNode }) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [state, dispatch] = useReducer(reducer, initReducer)
+
+  const [{ done, error }, dispatch] = useReducer(reducer, initReducer)
   const queryClient = useQueryClient()
 
   const {
@@ -28,6 +31,7 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
     resolver: yupResolver(addMetricSchema),
     mode: 'onChange',
   })
+
   const { mutate: addMetricMutate } = useMutation({
     mutationFn: (data: Metric) =>
       axios
@@ -49,24 +53,31 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
         queryClient.setQueryData(['metrics'], () => {
           return updated
         })
-
-        wait(1000).then(() => {
-          dispatch({ type: 'onReset' })
-          setOpenModal(false)
-        })
+        setOpenModal(false)
       },
       onError: (response) => {
         dispatch({ type: 'onError' })
         console.error(response)
+        setOpenModal(false)
       },
     })
   }
 
+  useEffect(() => {
+    let id: number
+    if (done || error) {
+      id = setTimeout(() => {
+        dispatch({ type: 'onReset' })
+      }, TOAST_DURATION_TIME / 2)
+    }
+    return () => clearTimeout(id)
+  }, [done, error])
+
   return (
-    <Modal open={openModal} onOpenChange={setOpenModal}>
-      <Modal.Trigger asChild>{children}</Modal.Trigger>
-      <Modal.Content>
-        {!state.done && !state.error && (
+    <>
+      <Modal open={openModal} onOpenChange={setOpenModal}>
+        <Modal.Trigger asChild>{children}</Modal.Trigger>
+        <Modal.Content>
           <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset className={style.fieldset}>
               <label className={style.label} htmlFor="code">
@@ -84,6 +95,7 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
                 id="date"
                 type="date"
                 {...register('date')}
+                defaultValue={formatDatePicker(Date.now())}
               />
               <p className={style.error}>{errors.date?.message}</p>
             </fieldset>
@@ -103,12 +115,20 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
               Add metric
             </button>
           </form>
-        )}
-        {state.done && <span>Added new metric 🎉</span>}
-        {state.error && (
-          <span>Oh no! Something went wrong during on add 🥺</span>
-        )}
-      </Modal.Content>
-    </Modal>
+        </Modal.Content>
+      </Modal>
+      {done && (
+        <Toast.Root className={style.toastRoot} duration={TOAST_DURATION_TIME}>
+          <Toast.Description>Added ✅</Toast.Description>
+        </Toast.Root>
+      )}
+      {error && (
+        <Toast.Root className={style.toastRoot} duration={TOAST_DURATION_TIME}>
+          <Toast.Description>
+            Oh no! Something went wrong during on add 🥺!
+          </Toast.Description>
+        </Toast.Root>
+      )}
+    </>
   )
 }

@@ -12,6 +12,9 @@ import { Metric } from './MetricsSetup'
 import { ReactNode, useEffect, useReducer, useState } from 'react'
 import { Modal } from '../../components/Modal/Modal'
 import { initReducer, reducer } from './reducer'
+import { formatDatePicker } from '../../utils/formatDatePicker'
+import * as Toast from '@radix-ui/react-toast'
+import { TOAST_DURATION_TIME } from '../../utils/consts'
 
 export const EditMetric = ({
   metric,
@@ -21,7 +24,7 @@ export const EditMetric = ({
   children: ReactNode
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [state, dispatch] = useReducer(reducer, initReducer)
+  const [{ done, error }, dispatch] = useReducer(reducer, initReducer)
   const queryClient = useQueryClient()
 
   const {
@@ -43,8 +46,8 @@ export const EditMetric = ({
   })
 
   const onSubmit = (data: AddUpdateMetricFormData) => {
-    const updatedMetric = data
-    updateMetricMutate(structureMetricToUpdate(updatedMetric), {
+    const updatedMetric = structureMetricToUpdate(data)
+    updateMetricMutate(updatedMetric, {
       onSuccess: () => {
         dispatch({ type: 'onSuccess' })
         const oldMetrics = queryClient.getQueryData<Metric[]>(['metrics'])
@@ -52,113 +55,116 @@ export const EditMetric = ({
         const updated = oldMetrics
           ? oldMetrics.map((m) => {
               if (m.id === data.id) {
-                return { ...m, ...structureMetricToUpdate(updatedMetric) }
+                return { ...m, ...updatedMetric }
               }
               return m
             })
           : oldMetrics
 
+        console.log(updated, updatedMetric)
+
         queryClient.setQueryData(['metrics'], () => {
           return updated
         })
+        setOpenModal(false)
       },
       onError: (response) => {
         dispatch({ type: 'onError' })
         console.error(response)
+        setOpenModal(false)
       },
     })
   }
 
   useEffect(() => {
     let id: number
-    if (state.done || state.error) {
+    if (done || error) {
       id = setTimeout(() => {
         dispatch({ type: 'onReset' })
-        setOpenModal(false)
-      }, 2000)
-      return clearInterval(id)
+      }, TOAST_DURATION_TIME)
     }
-  }, [state.done, state.error])
+    return () => clearTimeout(id)
+  }, [done, error])
 
   const formattedOrders = metric.amounts
     ? metric.amounts.reduce((acc, v) => (acc ? `${acc},${v}` : `${v}`), '')
     : []
 
-  /** Hack to format date YYYY-MM-DD to set correctly the datepicker */
-  const formattedDate = new Intl.DateTimeFormat('fr-CA', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(new Date(metric.date))
+  const formattedDate = formatDatePicker(metric.date)
 
   return (
     <>
       <Modal open={openModal} onOpenChange={setOpenModal}>
         <Modal.Trigger asChild>{children}</Modal.Trigger>
-
         <Modal.Content>
-          {!state.done && !state.error && (
-            <>
-              <h4>Edit metric</h4>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <fieldset className={style.fieldset}>
-                  <input
-                    hidden
-                    id="id"
-                    {...register('id')}
-                    defaultValue={metric.id}
-                  />
-                </fieldset>
-                <fieldset className={style.fieldset}>
-                  <label className={style.label} htmlFor="code">
-                    Marketing campaign code
-                  </label>
-                  <input
-                    className={style.input}
-                    id="code"
-                    {...register('code')}
-                    defaultValue={metric.code}
-                  />
-                  <p className={style.error}>{errors.code?.message}</p>
-                </fieldset>
-                <fieldset className={style.fieldset}>
-                  <label className={style.label} htmlFor="date">
-                    Acquisition orders date
-                  </label>
-                  <input
-                    className={style.input}
-                    id="date"
-                    type="date"
-                    {...register('date')}
-                    defaultValue={formattedDate}
-                  />
-                  <p className={style.error}>{errors.date?.message}</p>
-                </fieldset>
-                <fieldset className={style.fieldset}>
-                  {/* TODO: Add tooltip to explain what orders mean*/}
-                  <label className={style.label} htmlFor="orders">
-                    Orders
-                  </label>
-                  <input
-                    className={style.input}
-                    id="amounts"
-                    {...register('amounts')}
-                    defaultValue={formattedOrders}
-                  />
-                  <p className={style.error}>{errors.amounts?.message}</p>
-                </fieldset>
-                <button type="submit" className={style.addMetricBtn}>
-                  Save
-                </button>
-              </form>
-            </>
-          )}
-          {state.done && <span>Saved 🎉</span>}
-          {state.error && (
-            <span>Oh no! Something went wrong during on save 🥺</span>
-          )}
+          <>
+            <h4>Edit metric</h4>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <fieldset className={style.fieldset}>
+                <input
+                  hidden
+                  id="id"
+                  {...register('id')}
+                  defaultValue={metric.id}
+                />
+              </fieldset>
+              <fieldset className={style.fieldset}>
+                <label className={style.label} htmlFor="code">
+                  Marketing campaign code
+                </label>
+                <input
+                  className={style.input}
+                  id="code"
+                  {...register('code')}
+                  defaultValue={metric.code}
+                />
+                <p className={style.error}>{errors.code?.message}</p>
+              </fieldset>
+              <fieldset className={style.fieldset}>
+                <label className={style.label} htmlFor="date">
+                  Acquisition orders date
+                </label>
+                <input
+                  className={style.input}
+                  id="date"
+                  type="date"
+                  defaultValue={formattedDate}
+                  {...register('date')}
+                />
+                <p className={style.error}>{errors.date?.message}</p>
+              </fieldset>
+              <fieldset className={style.fieldset}>
+                {/* TODO: Add tooltip to explain what orders mean*/}
+                <label className={style.label} htmlFor="orders">
+                  Orders
+                </label>
+                <input
+                  className={style.input}
+                  id="amounts"
+                  {...register('amounts')}
+                  defaultValue={formattedOrders}
+                />
+                <p className={style.error}>{errors.amounts?.message}</p>
+              </fieldset>
+              <button type="submit" className={style.addMetricBtn}>
+                Save
+              </button>
+            </form>
+          </>
         </Modal.Content>
       </Modal>
+      {done && (
+        <Toast.Root className={style.toastRoot} duration={TOAST_DURATION_TIME}>
+          <Toast.Description>Edited! ✨</Toast.Description>
+        </Toast.Root>
+      )}
+      {error && (
+        <Toast.Root className={style.toastRoot} duration={TOAST_DURATION_TIME}>
+          <Toast.Description>
+            Oh no! Something went wrong during on edit 🥺!
+          </Toast.Description>
+        </Toast.Root>
+      )}
     </>
   )
 }
