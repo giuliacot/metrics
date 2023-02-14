@@ -3,6 +3,7 @@ import { createRoutesFromChildren, Route, RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
 import { MetricsSetup } from './pages/handle-metrics/MetricsSetup'
 import style from './App.module.scss'
+import * as Toast from '@radix-ui/react-toast'
 
 const queryClient = new QueryClient()
 
@@ -24,7 +25,10 @@ const router = createBrowserRouter(
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <Toast.Provider>
+        <RouterProvider router={router} />
+        <Toast.Viewport className={style.toastViewport} />
+      </Toast.Provider>
     </QueryClientProvider>
   )
 }
