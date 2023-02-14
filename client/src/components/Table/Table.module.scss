@@ -1,6 +1,6 @@
 .table {
   width: 100%;
-  border: 1px solid var(--primary-dark);
+  border: 1px solid var(--neutral-main);
   background-color: var(--neutral-light);
   border-collapse: collapse;
   border-radius: $border-radius;
@@ -9,11 +9,12 @@
 
 .titleHeader {
   @include Typography(false, 'p');
-  padding: spacing('s');
-  border: 1px solid var(--neutral-dark);
+  padding: spacing('m');
+  border-bottom: 1px solid var(--neutral-main);
+  text-align: left;
 }
 
 .tData {
-  padding: spacing('s');
-  border: 1px solid var(--neutral-dark);
+  padding: spacing('m');
+  border-bottom: 1px solid var(--neutral-main);
 }

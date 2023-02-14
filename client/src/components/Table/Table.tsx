@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { ReactNode } from 'react'
 import { Metric } from '../../pages/handle-metrics/MetricsSetup'
 import style from './Table.module.scss'
 
@@ -24,7 +25,7 @@ const columns = [
   }),
 ]
 
-export const Table = ({ data }: { data: Metric[] }) => {
+const Table = ({ data }: { data: Metric[] }) => {
   const table = useReactTable({
     data,
     columns,
@@ -63,3 +64,10 @@ export const Table = ({ data }: { data: Metric[] }) => {
     </table>
   )
 }
+
+const Title = ({ children }: { children: ReactNode }) => {
+  return <h4>{children}</h4>
+}
+
+Table.Title = Title
+export { Table }
