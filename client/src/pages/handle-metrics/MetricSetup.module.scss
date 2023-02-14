@@ -36,18 +36,13 @@
 .label {
   @include Typography(false, 'p');
 }
+
 .input {
-  margin: spacing('s') 0;
-  padding: spacing('s');
+  @include Input('normal');
 }
 
 .addMetricBtn {
   @include Button('normal');
-  margin-bottom: spacing('m');
-}
-
-.cardButton {
-  @include Button('small');
   margin-bottom: spacing('m');
 }
 

@@ -9,11 +9,17 @@ import { useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import style from './MetricSetup.module.scss'
 import { Metric } from './MetricsSetup'
-import { useEffect, useReducer, useState } from 'react'
+import { ReactNode, useEffect, useReducer, useState } from 'react'
 import { Modal } from '../../components/Modal/Modal'
 import { initReducer, reducer } from './reducer'
 
-export const EditMetric = ({ metric }: { metric: Metric }) => {
+export const EditMetric = ({
+  metric,
+  children,
+}: {
+  metric: Metric
+  children: ReactNode
+}) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [state, dispatch] = useReducer(reducer, initReducer)
   const queryClient = useQueryClient()
@@ -58,7 +64,7 @@ export const EditMetric = ({ metric }: { metric: Metric }) => {
       },
       onError: (response) => {
         dispatch({ type: 'onError' })
-        console.log(response)
+        console.error(response)
       },
     })
   }
@@ -78,6 +84,7 @@ export const EditMetric = ({ metric }: { metric: Metric }) => {
     ? metric.amounts.reduce((acc, v) => (acc ? `${acc},${v}` : `${v}`), '')
     : []
 
+  /** Hack to format date YYYY-MM-DD to set correctly the datepicker */
   const formattedDate = new Intl.DateTimeFormat('fr-CA', {
     year: 'numeric',
     month: '2-digit',
@@ -87,12 +94,12 @@ export const EditMetric = ({ metric }: { metric: Metric }) => {
   return (
     <>
       <Modal open={openModal} onOpenChange={setOpenModal}>
-        <Modal.Trigger asChild>
-          <button className={style.cardButton}>Edit</button>
-        </Modal.Trigger>
-        <Modal.Portal>
-          <Modal.Content>
-            {!state.done && !state.error && (
+        <Modal.Trigger asChild>{children}</Modal.Trigger>
+
+        <Modal.Content>
+          {!state.done && !state.error && (
+            <>
+              <h4>Edit metric</h4>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset className={style.fieldset}>
                   <input
@@ -144,13 +151,13 @@ export const EditMetric = ({ metric }: { metric: Metric }) => {
                   Save
                 </button>
               </form>
-            )}
-            {state.done && <span>Saved 🎉</span>}
-            {state.error && (
-              <span>Oh no! Something went wrong during on save 🥺</span>
-            )}
-          </Modal.Content>
-        </Modal.Portal>
+            </>
+          )}
+          {state.done && <span>Saved 🎉</span>}
+          {state.error && (
+            <span>Oh no! Something went wrong during on save 🥺</span>
+          )}
+        </Modal.Content>
       </Modal>
     </>
   )

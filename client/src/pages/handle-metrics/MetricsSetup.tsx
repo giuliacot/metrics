@@ -24,13 +24,6 @@ export const MetricsSetup = () => {
       axios.get('http://localhost:8080/metrics').then((res) => res.data),
   })
 
-  const deleteMetric = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    idMetric: string
-  ) => {
-    console.log('delete', idMetric)
-  }
-
   if (error) {
     /** Handled by react-router on Error component */
     throw Error(error.message)
@@ -39,18 +32,20 @@ export const MetricsSetup = () => {
   return (
     <>
       <h1 className={style.mainTitle}>
-        Marketing campaing Sales metrics Setup page
+        Marketing campaign Sales metrics Setup page
       </h1>
       {isLoading && <Loading />}
 
       {/* {data && <Table data={data} />} */}
-      <AddMetric />
+      <AddMetric>
+        <button className={style.addMetricBtn}>Add new metric</button>
+      </AddMetric>
       <main className={style.grid}>
         {data &&
           data.map(({ id, code, amounts, date }, index) => (
             <div key={index} className={style.cardWrapper}>
               <Card>
-                <h3>{code}</h3>
+                <h4>{code}</h4>
                 <p>
                   Total sales order:
                   {amounts?.reduce((acc, a) => a + acc, 0) ?? 0}
@@ -59,8 +54,17 @@ export const MetricsSetup = () => {
                   Date:
                   {new Intl.DateTimeFormat('it-IT').format(new Date(date))}
                 </p>
-                <EditMetric metric={{ id, code, amounts, date }} />{' '}
-                <DeleteMetric id={id} />
+                <EditMetric metric={{ id, code, amounts, date }}>
+                  <Card.Action>Edit</Card.Action>
+                </EditMetric>{' '}
+                <DeleteMetric
+                  id={id}
+                  renderItem={(onClickEvent) => (
+                    <Card.Action onClick={onClickEvent}>
+                      Delete {JSON.stringify(id)}
+                    </Card.Action>
+                  )}
+                />
               </Card>
             </div>
           ))}

@@ -7,14 +7,19 @@ import {
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { useState } from 'react'
+import { ReactNode, useEffect, useReducer, useState } from 'react'
 import axios from 'axios'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { Metric } from './MetricsSetup'
 import style from './MetricSetup.module.scss'
+import { reducer, initReducer } from './reducer'
+import { wait } from '../../utils/waits'
 
-export const AddMetric = () => {
+export const AddMetric = ({ children }: { children: ReactNode }) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
+  const [state, dispatch] = useReducer(reducer, initReducer)
+  const queryClient = useQueryClient()
+
   const {
     register,
     handleSubmit,
@@ -31,25 +36,37 @@ export const AddMetric = () => {
   })
 
   const onSubmit = (data: AddUpdateMetricFormData) => {
-    addMetricMutate(structureMetricToSubmit(data), {
+    const addedMetric = structureMetricToSubmit(data)
+    addMetricMutate(addedMetric, {
       onSuccess: () => {
-        alert('Form submitted successfully')
-        setOpenModal(false)
+        dispatch({ type: 'onSuccess' })
+        const oldMetrics = queryClient.getQueryData<Metric[]>(['metrics'])
+
+        const updated = oldMetrics
+          ? [...oldMetrics, addedMetric]
+          : [addedMetric]
+
+        queryClient.setQueryData(['metrics'], () => {
+          return updated
+        })
+
+        wait(1000).then(() => {
+          dispatch({ type: 'onReset' })
+          setOpenModal(false)
+        })
       },
       onError: (response) => {
-        alert('An error occured while submiting the form')
-        console.log(response)
+        dispatch({ type: 'onError' })
+        console.error(response)
       },
     })
   }
 
   return (
     <Modal open={openModal} onOpenChange={setOpenModal}>
-      <Modal.Trigger asChild>
-        <button className={style.addMetricBtn}>Add new metric</button>
-      </Modal.Trigger>
-      <Modal.Portal>
-        <Modal.Content>
+      <Modal.Trigger asChild>{children}</Modal.Trigger>
+      <Modal.Content>
+        {!state.done && !state.error && (
           <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset className={style.fieldset}>
               <label className={style.label} htmlFor="code">
@@ -86,8 +103,12 @@ export const AddMetric = () => {
               Add metric
             </button>
           </form>
-        </Modal.Content>
-      </Modal.Portal>
+        )}
+        {state.done && <span>Added new metric 🎉</span>}
+        {state.error && (
+          <span>Oh no! Something went wrong during on add 🥺</span>
+        )}
+      </Modal.Content>
     </Modal>
   )
 }
