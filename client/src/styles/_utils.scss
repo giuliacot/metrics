@@ -12,7 +12,7 @@ $sizes: (
   border: 0;
   border-radius: $border-radius;
   padding: map.get($sizes, $button-size);
-  background-color: var(--#{$color}-main);
+  background-color: var(--#{$color}-dark);
   transition: 0.2s ease-out;
   color: var(--text-light);
 
