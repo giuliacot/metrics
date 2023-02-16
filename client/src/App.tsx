@@ -5,6 +5,7 @@ import { MetricsSetup } from './pages/handle-metrics/MetricsSetup'
 import style from './App.module.scss'
 import * as Toast from '@radix-ui/react-toast'
 import { MetricsView } from './pages/view-metrics/ViewMetrics'
+import { NavList } from './components/NavList/NavList'
 
 const queryClient = new QueryClient()
 
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
         path="/"
         element={
           <div className={style.pageBaseLayour}>
+            <NavList></NavList>
             <MetricsSetup />
           </div>
         }
@@ -23,6 +25,7 @@ const router = createBrowserRouter(
         path="/view"
         element={
           <div className={style.pageBaseLayour}>
+            <NavList></NavList>
             <MetricsView />
           </div>
         }

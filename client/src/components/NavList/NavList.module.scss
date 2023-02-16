@@ -1,0 +1,28 @@
+.navWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.navLink {
+  & + & {
+    padding-left: spacing('l');
+  }
+  padding-top: spacing('l');
+  padding-bottom: spacing('l');
+}
+
+.link {
+  @include Typography(true, 'h4');
+  font-weight: 600;
+  text-decoration: none;
+  padding-bottom: 5px;
+  transition: 0.5s ease-in-out;
+  border-bottom: 2px solid transparent;
+  &:hover {
+    border-color: var(--primary-main);
+  }
+}
+
+.active {
+  border-bottom: 2px solid var(--primary-main);
+}
