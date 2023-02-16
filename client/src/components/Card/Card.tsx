@@ -1,23 +1,24 @@
 /** Total order card*/
-import { ReactNode } from 'react'
+import { forwardRef, ReactNode } from 'react'
 import style from './Card.module.scss'
 
 const Card = ({ children }: { children: ReactNode }) => {
   return <div className={style.box}>{children}</div>
 }
 
-export const Action = ({
-  children,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+/** To solve warning on RadixUI: https://github.com/radix-ui/primitives/issues/1013*/
+const Action = forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ children, ...props }, forwardedRef) => {
   return (
-    <button className={style.button} {...props}>
+    <button className={style.button} {...props} ref={forwardedRef}>
       {children}
     </button>
   )
-}
+})
 
-export const Label = ({ children, ...props }: { children: ReactNode }) => {
+const Label = ({ children, ...props }: { children: ReactNode }) => {
   return (
     <span className={style.label} {...props}>
       {children}
@@ -25,7 +26,7 @@ export const Label = ({ children, ...props }: { children: ReactNode }) => {
   )
 }
 
-export const Value = ({ children, ...props }: { children: ReactNode }) => {
+const Value = ({ children, ...props }: { children: ReactNode }) => {
   return (
     <span className={style.value} {...props}>
       {children}
@@ -33,7 +34,7 @@ export const Value = ({ children, ...props }: { children: ReactNode }) => {
   )
 }
 
-export const Bottom = ({ children, ...props }: { children: ReactNode }) => {
+const Bottom = ({ children, ...props }: { children: ReactNode }) => {
   return <div className={style.bottom}>{children}</div>
 }
 
