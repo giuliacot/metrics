@@ -61,9 +61,10 @@ export const MetricsSetup = () => {
                     <EditMetric metric={{ id, code, amounts, date }}>
                       <Card.Action>Edit</Card.Action>
                     </EditMetric>
+
                     <DeleteMetric
                       id={id}
-                      renderItem={(onClickHandler) => (
+                      action={(onClickHandler) => (
                         <Card.Action onClick={onClickHandler}>
                           Delete
                         </Card.Action>
