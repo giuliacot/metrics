@@ -9,9 +9,7 @@ const Modal = ({ children, ...props }: Dialog.DialogProps) => {
 }
 
 export const Content = React.forwardRef<
-  React.ForwardRefExoticComponent<
-    Dialog.DialogContentProps & React.RefAttributes<HTMLDivElement>
-  >,
+  HTMLDivElement | null,
   Dialog.DialogContentProps
 >(({ children, ...props }, forwardedRef) => (
   <Dialog.Portal>
