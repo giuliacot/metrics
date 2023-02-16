@@ -7,7 +7,6 @@ export function reducer(
   state: { error: boolean; done: boolean },
   action: { type: string }
 ) {
-  console.log(action)
   switch (action.type) {
     case 'onSuccess': {
       return { ...state, done: true }

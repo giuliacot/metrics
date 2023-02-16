@@ -45,7 +45,6 @@ const Root = ({ children, type, iconDir, className, ...props }: RootProps) => {
 
 const Icon = ({ children }: { children: ReactNode }) => {
   const { type, dir } = useContext(InputContext)
-  console.log(4, `icon-${dir}-${type}`)
   return <span className={style[`icon-${dir}-${type}`]}>{children}</span>
 }
 

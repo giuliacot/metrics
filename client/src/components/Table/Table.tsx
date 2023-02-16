@@ -6,10 +6,8 @@ import {
   Table as TableType,
   getFilteredRowModel,
   ColumnDef,
-  FilterFnOption,
 } from '@tanstack/react-table'
 import { createContext, ReactNode, useContext, useState } from 'react'
-import { Metric } from '../../pages/handle-metrics/MetricsSetup'
 import style from './Table.module.scss'
 import { ChevronLeft, ChevronRight, Search } from 'react-feather'
 import { Input } from '../Input/Input'
@@ -45,7 +43,6 @@ function Table<T>({
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: (row, columnId, filterValue) => {
-      console.log(columnId, filterValue)
       const value: string | number | null = row.getValue(columnId)
       if (typeof value === 'string') {
         return value?.toLowerCase().includes(filterValue.toLowerCase())

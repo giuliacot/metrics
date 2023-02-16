@@ -62,7 +62,6 @@ server.put(
     }>,
     reply
   ) => {
-    console.log(request.body, '\n\n')
     const result = await service.updateMetric(request.body)
     if (result) {
       return reply.code(200).send(result)
