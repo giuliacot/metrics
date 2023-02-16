@@ -70,10 +70,10 @@ tbody tr:hover {
 }
 
 .search {
-  margin: spacing('m');
+  margin: spacing('s');
 }
 
-.title {
+.title { 
   @include Typography(false, 'h3');
 }
 
