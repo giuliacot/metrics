@@ -16,6 +16,7 @@ import { reducer, initReducer } from './reducer'
 import * as Toast from '@radix-ui/react-toast'
 import { formatDatePicker } from '../../utils/formatDatePicker'
 import { TOAST_DURATION_TIME } from '../../utils/consts'
+import { Input } from '../../components/Input/Input'
 
 export const AddMetric = ({ children }: { children: ReactNode }) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -84,7 +85,7 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
                 Marketing campaign code
               </label>
               <input className={style.input} id="code" {...register('code')} />
-              <p className={style.error}>{errors.code?.message}</p>
+              <Input.Error>{errors.code?.message}</Input.Error>
             </fieldset>
             <fieldset className={style.fieldset}>
               <label className={style.label} htmlFor="date">
@@ -97,7 +98,7 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
                 {...register('date')}
                 defaultValue={formatDatePicker(Date.now())}
               />
-              <p className={style.error}>{errors.date?.message}</p>
+              <Input.Error>{errors.date?.message}</Input.Error>
             </fieldset>
             <fieldset className={style.fieldset}>
               {/* TODO: Add tooltip to explain what orders mean*/}
@@ -109,7 +110,7 @@ export const AddMetric = ({ children }: { children: ReactNode }) => {
                 id="amounts"
                 {...register('amounts')}
               />
-              <p className={style.error}>{errors.amounts?.message}</p>
+              <Input.Error>{errors.amounts?.message}</Input.Error>
             </fieldset>
             <button type="submit" className={style.saveBtn}>
               Add metric

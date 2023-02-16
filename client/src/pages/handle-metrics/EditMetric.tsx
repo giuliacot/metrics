@@ -15,6 +15,7 @@ import { initReducer, reducer } from './reducer'
 import { formatDatePicker } from '../../utils/formatDatePicker'
 import * as Toast from '@radix-ui/react-toast'
 import { TOAST_DURATION_TIME } from '../../utils/consts'
+import { Input } from '../../components/Input/Input'
 
 export const EditMetric = ({
   metric,
@@ -118,7 +119,7 @@ export const EditMetric = ({
                   {...register('code')}
                   defaultValue={metric.code}
                 />
-                <p className={style.error}>{errors.code?.message}</p>
+                <Input.Error>{errors.code?.message}</Input.Error>
               </fieldset>
               <fieldset className={style.fieldset}>
                 <label className={style.label} htmlFor="date">
@@ -131,7 +132,7 @@ export const EditMetric = ({
                   defaultValue={formattedDate}
                   {...register('date')}
                 />
-                <p className={style.error}>{errors.date?.message}</p>
+                <Input.Error>{errors.date?.message}</Input.Error>
               </fieldset>
               <fieldset className={style.fieldset}>
                 {/* TODO: Add tooltip to explain what orders mean*/}
@@ -144,7 +145,7 @@ export const EditMetric = ({
                   {...register('amounts')}
                   defaultValue={formattedOrders}
                 />
-                <p className={style.error}>{errors.amounts?.message}</p>
+                <Input.Error>{errors.amounts?.message}</Input.Error>
               </fieldset>
               <button type="submit" className={style.saveBtn}>
                 Save
