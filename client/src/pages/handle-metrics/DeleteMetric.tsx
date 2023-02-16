@@ -9,10 +9,10 @@ import { TOAST_DURATION_TIME } from '../../utils/consts'
 
 export const DeleteMetric = ({
   id,
-  renderItem,
+  action,
 }: {
   id: string
-  renderItem: (
+  action: (
     onClickEvent: React.MouseEventHandler<HTMLButtonElement>
   ) => JSX.Element
 }) => {
@@ -69,7 +69,7 @@ export const DeleteMetric = ({
           </Toast.Description>
         </Toast.Root>
       )}
-      {renderItem(handleDelete)}
+      {action(handleDelete)}
     </>
   )
 }

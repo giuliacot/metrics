@@ -62,8 +62,6 @@ export const EditMetric = ({
             })
           : oldMetrics
 
-        console.log(updated, updatedMetric)
-
         queryClient.setQueryData(['metrics'], () => {
           return updated
         })
