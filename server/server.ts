@@ -62,7 +62,6 @@ server.put(
     }>,
     reply
   ) => {
-    console.log(request.body, '\n\n')
     const result = await service.updateMetric(request.body)
     if (result) {
       return reply.code(200).send(result)
@@ -89,12 +88,12 @@ server.delete(
   }
 )
 
+// minimal setting fastify ErrorHandler
 server.setErrorHandler(function (error, request, reply) {
   if (error instanceof fastify.errorCodes.FST_ERR_NOT_FOUND) {
     this.log.error(error)
     reply.status(404).send('Resource not found')
   } else {
-    // fastify will use parent error handler to handle this
     reply.send(error)
   }
 })
