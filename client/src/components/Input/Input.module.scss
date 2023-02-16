@@ -1,0 +1,44 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.input {
+  &-small {
+    @include Input('small', false);
+  }
+
+  &-normal {
+    @include Input('normal', false);
+  }
+}
+
+.icon-right-small {
+  position: absolute;
+  right: 0;
+  margin-right: $inputSmallSize;
+}
+
+.icon-right-normal {
+  position: absolute;
+  right: 0;
+  margin-right: $inputNormalSize;
+}
+
+.icon-left-small {
+  position: absolute;
+  left: 0;
+  margin-right: $inputSmallSize;
+}
+
+.icon-left-normal {
+  position: absolute;
+  right: 0;
+  margin-right: $inputNormalSize;
+}
+
+.error {
+  @include Typography(false, 'small');
+  color: var(--attention-dark);
+}

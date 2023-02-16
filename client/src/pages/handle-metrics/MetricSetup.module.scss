@@ -1,11 +1,3 @@
-.mainContent {
-  background-color: var(--primary-light);
-  border-radius: $border-radius;
-  margin-bottom: spacing('xxl');
-  max-width: breakpoint('xxl');
-  margin: spacing('xl') spacing('m');
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -19,10 +11,7 @@
 }
 
 .mainTitle {
-  padding-top: spacing('l');
-  text-align: center;
-  margin-bottom: spacing('xxl');
-  color: var(--secondary-dark);
+  @include PageTitle();
 }
 
 .cardWrapper {
@@ -44,6 +33,11 @@
 
 .addMetricBtn {
   @include Button('normal');
+  margin-bottom: spacing('m');
+}
+
+.saveBtn {
+  @include Button('normal', 'secondary', true);
   margin-bottom: spacing('m');
 }
 

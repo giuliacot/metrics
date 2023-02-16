@@ -30,7 +30,6 @@ $headings: (
 
 @mixin Typography($margin: true, $type) {
   font-size: spacing.$base-spacing * map.get($headings, $type, 'size');
-  font-family: 'Lexend', sans-serif;
   font-weight: map.get($headings, $type, 'weight');
   color: var(--text-primary);
   @if ($margin) {

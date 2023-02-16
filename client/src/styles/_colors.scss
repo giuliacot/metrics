@@ -11,7 +11,7 @@ $-palette: (
   ),
   attention: (
     main: #ff57bb,
-    light: lighten(#ff57bb, 40%),
+    light: lighten(#ff57bb, 30%),
     dark: darken(#ff57bb, 30%),
   ),
   success: (
@@ -21,14 +21,16 @@ $-palette: (
   ),
   neutral: (
     main: #b2b1b5,
-    light: lighten(#b2b1b5, 40%),
+    light-400: lighten(#b2b1b5, 15%),
+    light-200: lighten(#b2b1b5, 50%),
     dark: darken(#b2b1b5, 20%),
   ),
   text: (
-    primary: #202020,
+    primary: #323232,
     secondary: #626262,
     light: #f4f4f4,
   ),
+
   overlay: (
     main: rgba(0, 0, 0, 0.5),
   ),

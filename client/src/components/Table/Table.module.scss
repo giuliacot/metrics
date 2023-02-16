@@ -1,19 +1,85 @@
+.tableWrapper {
+  background-color: var(--neutral-light-200);
+  box-shadow: 2px 2px 10px 1px var(--neutral-light-400);
+}
+
 .table {
-  width: 100%;
-  border: 1px solid var(--primary-dark);
-  background-color: var(--neutral-light);
+  border: 1px solid var(--neutral-main);
   border-collapse: collapse;
   border-radius: $border-radius;
   overflow: hidden;
+  width: 100%;
 }
 
 .titleHeader {
-  @include Typography(false, 'p');
-  padding: spacing('s');
-  border: 1px solid var(--neutral-dark);
+  @include Typography(false, 'h4');
+  padding: spacing('m');
+  background-color: var(--neutral-light-400);
+  text-align: left;
+}
+
+tbody tr:hover {
+  transition: background-color 0.3s ease-out;
+  background-color: var(--primary-light);
 }
 
 .tData {
+  padding: spacing('m');
+  border-bottom: 1px solid var(--neutral-light-400);
+}
+
+.next,
+.previous {
+  border: 0;
+  background-color: transparent;
+  line-height: 0;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.paginationActions {
+  display: inline-flex;
+  align-items: center;
+}
+
+.pageRecord {
+  @include Typography(false, 'small');
+  color: var(--neutral-dark);
+}
+
+.selectPageSize {
+  @include Typography(false, 'p');
+  font-weight: 400;
+  border: 0;
+  background-color: transparent;
   padding: spacing('s');
-  border: 1px solid var(--neutral-dark);
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.actionsBar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search {
+  margin: spacing('s');
+}
+
+.title { 
+  @include Typography(false, 'h3');
+}
+
+.topTable {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

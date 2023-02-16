@@ -1,13 +1,26 @@
 @use 'sass:map';
+@use 'spacing' as spacing;
 @use 'typography' as *;
 
-$border-radius: 2px;
+$inputSmallSize: 0.3rem;
+$inputNormalSize: 0.6rem;
+
+$border-radius: 3px;
 $sizes: (
-  'normal': 0.8rem,
-  'small': 0.4rem,
+  'normal': $inputNormalSize,
+  'small': $inputSmallSize,
 );
 
-@mixin Button($button-size, $color: 'secondary') {
+/** Page title*/
+@mixin PageTitle() {
+  text-align: center;
+  margin: spacing.spacing('xxl') 0;
+  color: var(--secondary-dark);
+}
+
+/** Button mixin */
+/** TODO: mixin signature*/
+@mixin Button($button-size, $color: 'secondary', $full: false) {
   @include Typography(false, 'p');
   border: 0;
   border-radius: $border-radius;
@@ -15,6 +28,9 @@ $sizes: (
   background-color: var(--#{$color}-dark);
   transition: 0.2s ease-out;
   color: var(--text-light);
+  @if ($full) {
+    width: 100%;
+  }
 
   &:hover {
     background-color: var(--#{$color}-light);
@@ -26,7 +42,13 @@ $sizes: (
   }
 }
 
-@mixin Input($input-size) {
-  margin: map.get($sizes, $input-size) 0;
+/** Input mixin */
+
+@mixin Input($input-size, $margin: true) {
+  @if ($margin) {
+    margin: map.get($sizes, $input-size) 0;
+  }
   padding: map.get($sizes, $input-size);
+  border-radius: $border-radius;
+  border: 1px solid var(--neutral-main);
 }
